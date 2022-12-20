@@ -69,7 +69,7 @@ If($null -ne $SetStatus){
         Invoke-RestMethod -Uri "$HAUrl/api/states/$entityStatus" -Method POST -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($params)) -ContentType "application/json"
     }
     if (($null -ne $JeedomToken) -and ($null -ne $JeedomUrl)) {
-        $Response = Invoke-WebRequest -Uri "https://$JeedomUrl/core/api/jeeApi.php?plugin=virtual&type=event&apikey=$JeedomToken&id=$JeedomStatusId&value=$SetStatus"
+        $Response = Invoke-WebRequest -Uri "https://$JeedomUrl/core/api/jeeApi.php?plugin=virtual&type=event&apikey=$JeedomToken&id=$JeedomStatusId&value=$SetStatus" -UseBasicParsing
         if ($Response|Where-Object {$_.StatusCode -ne 200}) {
             Write-Host "Error to contact Jeedom"
         }
@@ -209,7 +209,7 @@ If ($CurrentStatus -ne $Status -and $null -ne $Status) {
     }
     # Call Jeedom to set the status and activity sensors
     if (($null -ne $JeedomToken) -and ($null -ne $JeedomUrl)) {
-        $Response = Invoke-WebRequest -Uri "https://$JeedomUrl/core/api/jeeApi.php?plugin=virtual&type=event&apikey=$JeedomToken&id=$JeedomStatusId&value=$Status"
+        $Response = Invoke-WebRequest -Uri "https://$JeedomUrl/core/api/jeeApi.php?plugin=virtual&type=event&apikey=$JeedomToken&id=$JeedomStatusId&value=$Status" -UseBasicParsing
         if ($Response|Where-Object {$_.StatusCode -ne 200}) {
             Write-Host "Error to contact Jeedom"
         }
